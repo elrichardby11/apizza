@@ -1,9 +1,12 @@
 package com.cft.apizza.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +26,8 @@ public class Customer {
 
     @Column(length = 20, nullable = false)
     private String cellphone;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Orders> orders;
 }

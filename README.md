@@ -62,4 +62,62 @@ Después de configurar los puertos y la seguridad, debes reiniciar el servicio d
 ![image](https://github.com/user-attachments/assets/6b94f69c-1004-414a-9c91-832436e23bbb)
 
 ¡Listo! Ahora tu entorno está configurado y la aplicación puede interactuar con la base de datos en **SQL Server**.
+
+### Datos de Inicio (recomendable)
+
+```sql
+INSERT INTO pizza
+           (description
+           ,available
+           ,name
+           ,price
+           ,vegan
+           ,vegetarian)
+     VALUES
+           ('queso, tomate, jamon, oregano, aceituna',
+           1,
+           'La Napolitana',
+           8990,
+           0,
+           0),
+		   ('queso, pepperoni',
+           1,
+           'La Pepperoni',
+           7990,
+           0,
+           0),
+		   ('queso vegano, tomate, oregano, aceituna, piña',
+           1,
+           'La hawai',
+           9990,
+           1,
+           1),
+		   ('queso, palta, tomate, palmitos, cebolla',
+           1,
+           'La primavera',
+           10990,
+           0,
+           1),
+
+		   ('queso, pimenton',
+           1,
+           'La Pime',
+           7990,
+           0,
+           1)
+
+INSERT INTO customer
+           (mail
+           ,name
+           ,cellphone)
+     VALUES
+           ('juan@cft.cl',
+           'Juan',
+           '911111111'),
+		   ('maria@cft.cl',
+           'Maria',
+           '922222222'),
+		   ('richy@cft.cl',
+           'Richy',
+           '933333333')
 ```

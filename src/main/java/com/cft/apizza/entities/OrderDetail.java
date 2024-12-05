@@ -1,5 +1,6 @@
 package com.cft.apizza.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,11 +16,14 @@ public class OrderDetail {
     @Column(name = "id_order_detail")
     private Integer id;
 
-    // Pendiente la relación
-    //private Pizza pizza;
+    @ManyToOne
+    @JoinColumn(name = "pizza_id")
+    private Pizza pizza;
 
-    // Pendiente la relación
-    //private Order order;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
+    private Orders order;
 
     @Column(nullable = false)
     private Integer quantity;

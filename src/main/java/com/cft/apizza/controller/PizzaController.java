@@ -53,5 +53,49 @@ public class PizzaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/vegetarian")
+    public ResponseEntity<List<Pizza>> getVegetarian() {
+        return ResponseEntity.ok(pizzaService.findVegetarian());
+    }
+
+    @GetMapping("/find_ingredient/{ingredient}")
+    public ResponseEntity<List<Pizza>> findIngredient(@PathVariable String ingredient) {
+        return ResponseEntity.ok(pizzaService.findIngredient(ingredient));
+    }
+
+    @GetMapping("/available1")
+    public ResponseEntity<List<Pizza>> available() {
+        return ResponseEntity.ok(pizzaService.findAvailable());
+    }
+
+    @GetMapping("/price/{price}")
+    public ResponseEntity<List<Pizza>> price(@PathVariable Integer price) {
+        return ResponseEntity.ok(pizzaService.findByPrice(price));
+    }
+
+    @GetMapping("/available2")
+    public ResponseEntity<List<Pizza>> getAvailable() {
+        return ResponseEntity.ok(pizzaService.getAvailable());
+    }
+
+    @GetMapping("/contains/{ingredient}")
+    public ResponseEntity<List<Pizza>> contains(@PathVariable String ingredient) {
+        return ResponseEntity.ok(pizzaService.contains(ingredient));
+    }
+
+    @GetMapping("/not_contains/{ingredient}")
+    public ResponseEntity<List<Pizza>> notContains(@PathVariable String ingredient) {
+        return ResponseEntity.ok(pizzaService.notContains(ingredient));
+    }
+
+    @GetMapping("/less_than/{price}")
+    public ResponseEntity<List<Pizza>> lessThan(@PathVariable Integer price) {
+        return ResponseEntity.ok(pizzaService.lessThan(price));
+    }
+
+    @GetMapping("/vegan_count")
+    public ResponseEntity<Integer> veganCount() {
+        return ResponseEntity.ok(pizzaService.veganCount());
+    }
 
 }

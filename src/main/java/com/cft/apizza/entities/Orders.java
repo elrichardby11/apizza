@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,12 +21,16 @@ public class Orders {
     @Column(columnDefinition = "DATETIME", nullable = false)
     private LocalDate date;
 
-    // Pendiente la relación
-    //private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "customer")
+    private Customer customer;
 
     @Column(length = 200)
     private String details;
 
     @Column(nullable = false)
     private Integer total;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails;
 }
