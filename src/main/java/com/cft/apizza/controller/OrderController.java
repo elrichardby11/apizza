@@ -1,19 +1,13 @@
 package com.cft.apizza.controller;
 
-import com.cft.apizza.entities.OrderDetail;
-import com.cft.apizza.entities.Orders;
-import com.cft.apizza.entities.Pizza;
+import com.cft.apizza.entities.*;
 import com.cft.apizza.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orden")
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -25,23 +19,28 @@ public class OrderController {
     @Autowired
     private DetailOrderService detailOrderService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @PostMapping
     public ResponseEntity<Orders> createOrden(@RequestBody Orders order) {
-        // Guardar la orden sin detalles para asignar el ID generado
         Orders newOrder = orderService.saveOrder(order);
+
+        // Validar si el cliente existe
+        if (!customerService.existsCustomer(order.getCustomer().getId())) {
+            return ResponseEntity.badRequest().build();
+        }
 
         int total = 0;
 
-        // Procesar los detalles de la orden
         for (OrderDetail detail : order.getOrderDetails()) {
-            detail.setOrder(newOrder); // Asociar el detalle con la orden
+            detail.setOrder(newOrder);
             Pizza pizza = pizzaService.getPizzaById(detail.getPizza().getId())
                     .orElseThrow(() -> new RuntimeException("Pizza no encontrada"));
             total += detail.getQuantity() * pizza.getPrice();
-            detailOrderService.saveOrderDetails(detail); // Guardar cada detalle
+            detailOrderService.saveOrderDetails(detail);
         }
 
-        // Asignar el total y guardar nuevamente la orden
         newOrder.setTotal(total);
         newOrder = orderService.saveOrder(newOrder);
 

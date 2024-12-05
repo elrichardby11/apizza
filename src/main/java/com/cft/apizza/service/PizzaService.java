@@ -30,6 +30,9 @@ public class PizzaService {
     }
 
     public boolean existsPizza(Integer id) {
+        if (id == null) {
+            return false; // O manejar el caso de otra manera
+        }
         return this.pizzaRepository.existsById(id);
     }
 

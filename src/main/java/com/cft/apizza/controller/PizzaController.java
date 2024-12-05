@@ -29,7 +29,7 @@ public class PizzaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pizza> createPizza(@PathVariable Pizza pizza) {
+    public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
         if (!pizzaService.existsPizza(pizza.getId())) {
             Pizza newPizza = pizzaService.savePizza(pizza);
             return new ResponseEntity<>(newPizza, HttpStatus.CREATED);
@@ -39,7 +39,7 @@ public class PizzaController {
     }
 
     @PutMapping
-    public ResponseEntity<Pizza> updatePizza(@PathVariable Pizza pizza) {
+    public ResponseEntity<Pizza> updatePizza(@RequestBody Pizza pizza) {
         if (pizzaService.existsPizza(pizza.getId())) {
             Pizza newPizza = pizzaService.savePizza(pizza);
             return ResponseEntity.ok(pizzaService.savePizza(pizza));
